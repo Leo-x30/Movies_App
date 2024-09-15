@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class SearchTab extends StatelessWidget {
-  static const String routename='searchtab';
+class BrowseListTab extends StatelessWidget {
+  static const String routename='browselisttab';
+
+  const BrowseListTab({super.key});
 
   @override
   Widget build(BuildContext context) {

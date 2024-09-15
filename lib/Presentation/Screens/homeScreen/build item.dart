@@ -7,7 +7,7 @@ class BuildRecommendedItem extends StatelessWidget {
   String duration;
   String rating;
 
-  BuildRecommendedItem({
+  BuildRecommendedItem({super.key, 
     required this.icon,
     required this.title,
     required this.duration,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/Screens/build%20item.dart';
-import 'package:movies_app/Screens/new%20release%20item.dart';
+import 'package:movies_app/Presentation/Screens/homeScreen/build%20item.dart';
+import 'package:movies_app/Presentation/Screens/homeScreen/new%20release%20item.dart';
 
 class HomeTab extends StatelessWidget {
   static const String routename = 'hometab';
+
+  const HomeTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +15,11 @@ class HomeTab extends StatelessWidget {
         color: Colors.black87,
         child: Stack(
           children: [
-
             Positioned(
               top: 40.h,
               left: 20.w,
               right: 20.w,
-              child: Container(
+              child: SizedBox(
                 height: 200.h,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +29,7 @@ class HomeTab extends StatelessWidget {
                       size: 100.sp,
                       color: Colors.grey,
                     ),
-                    SizedBox(width: 10.w),
+                    SizedBox(width: 20.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,8 +39,7 @@ class HomeTab extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white
-                            ),
+                                color: Colors.white),
                           ),
                           SizedBox(height: 5.h),
                           Text(
@@ -62,7 +62,6 @@ class HomeTab extends StatelessWidget {
                 ),
               ),
             ),
-
             Positioned(
               top: 260.h,
               left: 20.w,
@@ -75,8 +74,7 @@ class HomeTab extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white
-                    ),
+                        color: Colors.white),
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(
@@ -110,7 +108,6 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
             ),
-
             Positioned(
               top: 430.h,
               left: 20.w,
@@ -123,8 +120,7 @@ class HomeTab extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white
-                    ),
+                        color: Colors.white),
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(

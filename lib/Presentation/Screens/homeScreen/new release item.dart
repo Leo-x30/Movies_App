@@ -6,7 +6,7 @@ class BuildReleaseItem extends StatelessWidget {
   String title;
   String duration;
 
-  BuildReleaseItem({
+  BuildReleaseItem({super.key, 
     required this.icon,
     required this.title,
     required this.duration,

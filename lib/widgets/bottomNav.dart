@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/Screens/BrowseListTab.dart';
-import 'package:movies_app/Screens/HomeTab.dart';
-import 'package:movies_app/Screens/SearchTab.dart';
-import 'package:movies_app/Screens/WatchListTab.dart';
+import 'package:movies_app/Presentation/Screens/browse/BrowseListTab.dart';
+
+import 'package:movies_app/Presentation/Screens/homeScreen/HomeTab.dart';
+import 'package:movies_app/Presentation/Screens/SearchScreen/SearchTab.dart';
+import 'package:movies_app/Presentation/Screens/watchListScreen/WatchListTab.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routename = 'homeScreen';
+
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -35,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: onTabTapped,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: const Color(0xffFFBB3B),
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.black,
         type: BottomNavigationBarType.fixed,
