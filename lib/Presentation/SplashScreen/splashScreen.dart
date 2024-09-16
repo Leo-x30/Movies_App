@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/widgets/bottomNav.dart';
 
 class SplashScreen extends StatelessWidget {
-  static const String routename='splashscreen';
+  static const String routename = 'splashscreen';
 
   const SplashScreen({super.key});
   @override
   Widget build(BuildContext context) {
-
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     });
 
@@ -22,7 +21,7 @@ class SplashScreen extends StatelessWidget {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('lib/assets/images/splash.png'),
+            image: AssetImage('lib/assets/splash.png'),
             fit: BoxFit.cover,
           ),
         ),

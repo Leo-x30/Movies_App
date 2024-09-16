@@ -7,9 +7,8 @@ class WatchListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            color: Colors.black87)
+    return const Scaffold(
+      backgroundColor: Colors.black,
     );
   }
 }

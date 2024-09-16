@@ -1,58 +1,143 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/Presentation/Screens/homeScreen/build%20item.dart';
-import 'package:movies_app/Presentation/Screens/homeScreen/new%20release%20item.dart';
+import 'package:movies_app/data/api/Api_manger.dart';
+import 'package:movies_app/data/api/const.dart';
+import 'package:movies_app/model/hometabmodel/hometabResponse.dart';
+import 'package:movies_app/widgets/customviewMovies.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class HomeTab extends StatelessWidget {
-  static const String routename = 'hometab';
+class HomeTab extends StatefulWidget {
+  static const String routename = "HomeTab";
 
-  const HomeTab({super.key});
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+late Future<List<Movie>> popularMovies;
+
+class _HomeTabState extends State<HomeTab> {
+  @override
+  void initState() {
+    super.initState();
+    popularMovies = ApiManager.getAllTopSide();
+  }
+
+  final Uri _url = Uri.parse('https://www.youtube.com/watch?v=gUTtJjV852c');
+  final Map<String, bool> _favorites = {
+    '1': true,
+    '2': false,
+  }; // Map to track favorite status
+
+  void toggleBookmark(String movieId) {
+    setState(() {
+      _favorites[movieId] = !(_favorites[movieId] ?? false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.black87,
-        child: Stack(
-          children: [
-            Positioned(
-              top: 40.h,
-              left: 20.w,
-              right: 20.w,
-              child: SizedBox(
-                height: 200.h,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return FutureBuilder<List<Movie>>(
+      future: popularMovies,
+      builder: (context, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snap.hasError) {
+          return Center(child: Text('Error: ${snap.error.toString()}'));
+        } else if (!snap.hasData || snap.data!.isEmpty) {
+          return Center(child: Text('No data available'));
+        }
+
+        final data = snap.data!;
+        final moive0 = data[0];
+
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 49.h),
+                Stack(
                   children: [
-                    Icon(
-                      Icons.movie,
-                      size: 100.sp,
-                      color: Colors.grey,
+                    Container(
+                      width: 412.w,
+                      height: 289.h,
+                      color: Colors.black,
                     ),
-                    SizedBox(width: 20.w),
-                    Expanded(
+                    SizedBox(
+                      width: 412.w,
+                      height: 217.h,
+                      child: Image.network(
+                        '${Const.imagepath}${moive0.posterPath}', // Ensure this is a full URL or handle base URL
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      left: 190.w,
+                      top: 90.h,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          color: Colors.white,
+                        ),
+                        child: IconButton(
+                          onPressed: _launchUrl,
+                          icon: Icon(
+                            Icons.play_arrow,
+                            size: 50.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 75.h,
+                      // bottom: 40,
+                      right: 280,
+                      left: -90,
+                      child: Stack(
+                        children: [
+                          Image.network(
+                            '${Const.imagepath}${moive0.backdropPath}', // Ensure this is a full URL or handle base URL
+                            filterQuality: FilterQuality.high,
+                            fit: BoxFit.cover,
+                          ),
+                          Positioned(
+                            top: -8.h,
+                            left: -11.w,
+                            child: IconButton(
+                              onPressed: () {
+                                toggleBookmark('unique_movie_id');
+                              },
+                              icon: Icon(
+                                _favorites['unique_movie_id'] == true
+                                    ? Icons.bookmark_add_outlined
+                                    : Icons.bookmark_added_outlined,
+                                color: Colors.white,
+                                size: 30.sp,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 140.w,
+                      top: 220.h,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Dora and the lost city of gold",
+                            '${moive0.title}', // Replace with actual movie title
                             style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                              color: Colors.white,
+                              fontSize: 14.sp,
+                            ),
                           ),
-                          SizedBox(height: 5.h),
                           Text(
-                            "2019  PG-13  2h 7m",
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                          SizedBox(height: 10.h),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.play_circle_fill,
-                              color: Colors.grey,
-                              size: 40.sp,
+                            '${moive0.releaseDate}${moive0.popularity}', // Replace with actual movie details
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.sp,
                             ),
                           ),
                         ],
@@ -60,101 +145,44 @@ class HomeTab extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+                Container(
+                  color: const Color(0xff282A28),
+                  height: 187.h,
+                  width: 455.w,
+                  child: Customviewmovies(
+                    snapshot: snap,
+                    movieId: '1',
+                    onToggleFavorite: toggleBookmark,
+                    title: 'New Releases',
+                  ),
+                ),
+                SizedBox(height: 30.h),
+                Container(
+                  color: const Color(0xff282A28),
+                  height: 187.h,
+                  width: 455.w,
+                  child: Customviewmovies(
+                    snapshot: snap,
+                    title: 'Recommended',
+                    movieId: 'another_unique_movie_id',
+                    onToggleFavorite: toggleBookmark,
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: 260.h,
-              left: 20.w,
-              right: 20.w,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "New Releases",
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(height: 10.h),
-                  SizedBox(
-                    height: 150.h,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        BuildReleaseItem(
-                          icon: Icons.movie,
-                          title: "Narcos",
-                          duration: "1h 45m",
-                        ),
-                        BuildReleaseItem(
-                          icon: Icons.movie,
-                          title: "Deadpool 2",
-                          duration: "1h 59m",
-                        ),
-                        BuildReleaseItem(
-                          icon: Icons.movie,
-                          title: "Annabelle",
-                          duration: "1h 30m",
-                        ),
-                        BuildReleaseItem(
-                          icon: Icons.movie,
-                          title: "Toy Story 4",
-                          duration: "1h 40m",
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 430.h,
-              left: 20.w,
-              right: 20.w,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Recommended",
-                    style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(height: 10.h),
-                  SizedBox(
-                    height: 150.h,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        BuildRecommendedItem(
-                          icon: Icons.movie,
-                          title: "Deadpool 2",
-                          duration: "1h 59m",
-                          rating: "7.7",
-                        ),
-                        BuildRecommendedItem(
-                          icon: Icons.movie,
-                          title: "Deadpool 2",
-                          duration: "1h 59m",
-                          rating: "7.7",
-                        ),
-                        BuildRecommendedItem(
-                          icon: Icons.movie,
-                          title: "Deadpool 2",
-                          duration: "1h 59m",
-                          rating: "7.7",
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(
+      _url,
+      mode: LaunchMode.inAppWebView,
+      webViewConfiguration: const WebViewConfiguration(enableJavaScript: true),
+    )) {
+      throw Exception('Could not launch $_url');
+    }
   }
 }
