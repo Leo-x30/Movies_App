@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/Presentation/Screens/SearchScreen/SearchTab.dart';
+import 'package:movies_app/Presentation/Screens/SearchScreen/SearchScreen.dart';
 import 'package:movies_app/Presentation/Screens/browse/BrowseListTab.dart';
 import 'package:movies_app/Presentation/Screens/homeScreen/MoviesDetails.dart';
 import 'package:movies_app/Presentation/Screens/homeScreen/homeTab.dart';
@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
           initialRoute: SplashScreen.routename,
           routes: {
             HomeTab.routename: (context) => HomeTab(),
-            SplashScreen.routename: (context) => const SplashScreen(),
+            SplashScreen.routename: (context) =>  SplashScreen(),
             BrowseListTab.routename: (context) => BrowseListTab(),
-            SearchTab.routename: (context) => const SearchTab(),
-            WatchListTab.routename: (context) => const WatchListTab(),
-            MoviesDetails.routeName: (context) => const MoviesDetails(),
+            SearchTab.routename: (context) =>  SearchTab(),
+            WatchListTab.routename: (context) =>  WatchListTab(),
+            MoviesDetails.routeName: (context) =>  MoviesDetails(),
           },
         );
       },
