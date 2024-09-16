@@ -8,7 +8,7 @@ class WatchListTab extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
-        title: const Text('Browse Category'),
+        title: const Text('Favourites'),
         backgroundColor: Colors.black87,
         elevation: 0,
       ),
