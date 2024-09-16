@@ -9,10 +9,12 @@ class SearchTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black87,
-
       body: Column(
         children: [
           // Search bar
+          SizedBox(
+            height: 50,
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -30,9 +32,9 @@ class SearchTab extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          // Spacer to push the "No movies found" to the bottom
+
           Spacer(),
-          // No movies found placeholder
+
           Column(
             children: [
               Icon(

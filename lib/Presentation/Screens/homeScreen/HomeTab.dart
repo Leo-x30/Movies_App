@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/Presentation/Screens/homeScreen/MoviesDetails.dart';
 import 'package:movies_app/data/api/Api_manger.dart';
 import 'package:movies_app/data/api/const.dart';
+import 'package:movies_app/model/hometabmodel/NewRealeases.dart';
+import 'package:movies_app/model/hometabmodel/RecommendedResponse.dart';
 import 'package:movies_app/model/hometabmodel/hometabResponse.dart';
-import 'package:movies_app/widgets/customviewMovies.dart';
+import 'package:movies_app/widgets/NewRealsesWidget.dart';
+import 'package:movies_app/widgets/RecommndedWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeTab extends StatefulWidget {
   static const String routename = "HomeTab";
+
+  const HomeTab({super.key});
 
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 late Future<List<Movie>> popularMovies;
+late Future<List<Results>> NewrealeasesMovies;
+late Future<List<RecommdedData>> RecommndedMovies;
 
 class _HomeTabState extends State<HomeTab> {
+  final Map<int?, bool> _favoriteMovies = {};
+  bool isfav = false;
   @override
   void initState() {
     super.initState();
     popularMovies = ApiManager.getAllTopSide();
+    NewrealeasesMovies = ApiManager.getNewRealeases();
+    RecommndedMovies = ApiManager.getRecommended();
   }
 
-  final Uri _url = Uri.parse('https://www.youtube.com/watch?v=gUTtJjV852c');
-  final Map<String, bool> _favorites = {
-    '1': true,
-    '2': false,
-  }; // Map to track favorite status
+  final Uri _url = Uri.parse('https://www.youtube.com/watch?v=hJiPAJKjUVg');
 
-  void toggleBookmark(String movieId) {
+  void toggleBookmark() {
     setState(() {
-      _favorites[movieId] = !(_favorites[movieId] ?? false);
+      isfav = !isfav;
     });
   }
 
@@ -40,30 +48,31 @@ class _HomeTabState extends State<HomeTab> {
       future: popularMovies,
       builder: (context, snap) {
         if (snap.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snap.hasError) {
           return Center(child: Text('Error: ${snap.error.toString()}'));
         } else if (!snap.hasData || snap.data!.isEmpty) {
-          return Center(child: Text('No data available'));
+          return const Center(child: Text('No data available'));
         }
 
         final data = snap.data!;
-        final moive0 = data[0];
+        final moive0 = data[18];
 
         return Scaffold(
           backgroundColor: Colors.black,
           body: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 49.h),
+                SizedBox(height: 50.h),
                 Stack(
                   children: [
                     Container(
                       width: 412.w,
-                      height: 289.h,
+                      height: 300.h,
                       color: Colors.black,
                     ),
-                    SizedBox(
+                    //image big
+                    Container(
                       width: 412.w,
                       height: 217.h,
                       child: Image.network(
@@ -72,13 +81,14 @@ class _HomeTabState extends State<HomeTab> {
                         fit: BoxFit.cover,
                       ),
                     ),
+                    // icon play
                     Positioned(
-                      left: 190.w,
-                      top: 90.h,
+                      top: 77.h,
+                      left: 175.w,
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 222, 214, 214),
                         ),
                         child: IconButton(
                           onPressed: _launchUrl,
@@ -90,58 +100,81 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     ),
                     Positioned(
-                      top: 75.h,
-                      // bottom: 40,
-                      right: 280,
-                      left: -90,
-                      child: Stack(
+                      left: 20,
+                      top: 100.h,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Image.network(
-                            '${Const.imagepath}${moive0.backdropPath}', // Ensure this is a full URL or handle base URL
-                            filterQuality: FilterQuality.high,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            top: -8.h,
-                            left: -11.w,
-                            child: IconButton(
-                              onPressed: () {
-                                toggleBookmark('unique_movie_id');
-                              },
-                              icon: Icon(
-                                _favorites['unique_movie_id'] == true
-                                    ? Icons.bookmark_add_outlined
-                                    : Icons.bookmark_added_outlined,
-                                color: Colors.white,
-                                size: 30.sp,
+                          Stack(
+                            children: [
+                              Container(
+                                width: 129,
+                                height: 180,
+                                child: Image.network(
+                                  '${Const.imagepath}${moive0.backdropPath}', // Ensure this is a full URL or handle base URL
+                                  filterQuality: FilterQuality.high,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
+                              Positioned(
+                                top: -9.h,
+                                left: -11.w,
+                                child: IconButton(
+                                  onPressed: () {
+                                    toggleBookmark();
+                                  },
+                                  icon: Icon(
+                                    // bookmark_add_outlined
+                                    isfav
+                                        ? Icons.bookmark_added_outlined
+                                        : Icons.bookmark_add_outlined,
+                                    color: isfav ? Colors.yellow : Colors.white,
+                                    size: 30.sp,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                     Positioned(
-                      left: 140.w,
-                      top: 220.h,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${moive0.title}', // Replace with actual movie title
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.sp,
+                      left: 160.w,
+                      top: 225.h,
+                      child: Row(children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${moive0.title}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24.sp,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '${moive0.releaseDate}${moive0.popularity}', // Replace with actual movie details
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10.sp,
+                            Text(
+                              '${moive0.releaseDate}  ${moive0.originalLanguage}', // Replace with actual movie details
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.sp,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 110.w,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, MoviesDetails.routeName);
+                            },
+                            icon: Icon(
+                              Icons.info,
+                              color: Colors.white,
+                              size: 35,
+                            ))
+                      ]),
                     ),
                   ],
                 ),
@@ -149,10 +182,10 @@ class _HomeTabState extends State<HomeTab> {
                   color: const Color(0xff282A28),
                   height: 187.h,
                   width: 455.w,
-                  child: Customviewmovies(
-                    snapshot: snap,
-                    movieId: '1',
-                    onToggleFavorite: toggleBookmark,
+                  child: Newrealseswidget(
+                    snapshot: ApiManager.getNewRealeases(),
+                    isfav: isfav,
+                    toggleBookmark: toggleBookmark,
                     title: 'New Releases',
                   ),
                 ),
@@ -161,11 +194,11 @@ class _HomeTabState extends State<HomeTab> {
                   color: const Color(0xff282A28),
                   height: 187.h,
                   width: 455.w,
-                  child: Customviewmovies(
-                    snapshot: snap,
+                  child: Recommndedwidget(
+                    isfav: isfav,
+                    snapshot: ApiManager.getRecommended(),
                     title: 'Recommended',
-                    movieId: 'another_unique_movie_id',
-                    onToggleFavorite: toggleBookmark,
+                    toggleBookmark: toggleBookmark,
                   ),
                 ),
               ],

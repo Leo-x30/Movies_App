@@ -1,24 +1,24 @@
-class HometabResponse {
-  HometabResponse({
+class RecommendedResponse {
+  RecommendedResponse({
     this.page,
     this.results,
     this.totalPages,
     this.totalResults,
   });
 
-  HometabResponse.fromJson(dynamic json) {
+  RecommendedResponse.fromJson(dynamic json) {
     page = json['page'];
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
-        results?.add(Movie.fromJson(v));
+        results?.add(RecommdedData.fromJson(v));
       });
     }
     totalPages = json['total_pages'];
     totalResults = json['total_results'];
   }
   int? page;
-  List<Movie>? results;
+  List<RecommdedData>? results;
   int? totalPages;
   int? totalResults;
 
@@ -34,9 +34,8 @@ class HometabResponse {
   }
 }
 
-class Movie {
-  Movie({
-    required this. isFavorite,
+class RecommdedData {
+  RecommdedData({
     this.adult,
     this.backdropPath,
     this.genreIds,
@@ -53,12 +52,11 @@ class Movie {
     this.voteCount,
   });
 
-  Movie.fromJson(Map<String, dynamic> json) {
-    isFavorite = json['isfavorite'];
+  RecommdedData.fromJson(dynamic json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     genreIds = json['genre_ids'] != null ? json['genre_ids'].cast<int>() : [];
-    id = json['id']??0;
+    id = json['id'];
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     overview = json['overview'];
@@ -74,7 +72,6 @@ class Movie {
   String? backdropPath;
   List<int>? genreIds;
   int? id;
-  bool? isFavorite ;
   String? originalLanguage;
   String? originalTitle;
   String? overview;
@@ -85,7 +82,6 @@ class Movie {
   bool? video;
   double? voteAverage;
   int? voteCount;
-  
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
