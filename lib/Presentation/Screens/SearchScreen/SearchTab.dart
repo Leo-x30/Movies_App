@@ -30,9 +30,9 @@ class SearchTab extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          // Spacer to push the "No movies found" to the bottom
+          
           Spacer(),
-          // No movies found placeholder
+          
           Column(
             children: [
               Icon(
