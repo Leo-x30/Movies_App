@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: SplashScreen.routename,
           routes: {
-            HomeTab.routename: (context) => HomeTab(),
-            SplashScreen.routename: (context) => const SplashScreen(),
-            BrowseListTab.routename: (context) => const BrowseListTab(),
-            SearchTab.routename: (context) => const SearchTab(),
-            WatchListTab.routename: (context) => const WatchListTab(),
+            HomeTab.routename: (context) =>HomeTab(),
+            SplashScreen.routename: (context) =>SplashScreen(),
+            BrowseListTab.routename: (context) =>BrowseListTab(),
+            SearchTab.routename: (context) =>SearchTab(),
+            WatchListTab.routename: (context) =>WatchListTab(),
           },
         );
       },
