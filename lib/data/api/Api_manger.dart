@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies_app/data/api/endpoints.dart';
+import 'package:movies_app/model/CategoriesModel/MovieCategoriesResponse.dart';
+import 'package:movies_app/model/CategoriesModel/MovieDiscoverResponse.dart' as Discover;
 import 'package:movies_app/model/hometabmodel/NewRealeases.dart';
 import 'package:movies_app/model/hometabmodel/RecommendedResponse.dart';
 import 'package:movies_app/model/hometabmodel/hometabResponse.dart';
@@ -86,6 +88,24 @@ class ApiManager {
       }
     } catch (e) {
       throw Exception("Error fetching data: $e");
+    }
+  }
+  static Future<MovieCategoriesResponse>getAllCategories() async {
+    try{
+      Uri url= Uri.https(baseUrl,Endpoints.BrowseCategory);
+      var response= await http.get(url);
+      return MovieCategoriesResponse.fromJson(jsonDecode(response.body));
+    }catch(e){
+      throw(e);
+    }
+  }
+  static Future<Discover.MovieDiscoverResponse>discoverAllCategories() async {
+    try{
+      Uri url= Uri.https(baseUrl,Endpoints.Discover_Movies);
+      var response= await http.get(url);
+      return Discover.MovieDiscoverResponse.fromJson(jsonDecode(response.body));
+    }catch(e){
+      throw(e);
     }
   }
 }

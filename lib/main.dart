@@ -8,11 +8,10 @@ import 'package:movies_app/Presentation/Screens/watchListScreen/WatchListTab.dar
 import 'package:movies_app/Presentation/SplashScreen/splashScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +25,11 @@ class MyApp extends StatelessWidget {
           initialRoute: SplashScreen.routename,
           routes: {
             HomeTab.routename: (context) => HomeTab(),
-            SplashScreen.routename: (context) =>  SplashScreen(),
+            SplashScreen.routename: (context) => SplashScreen(),
             BrowseListTab.routename: (context) => BrowseListTab(),
             SearchTab.routename: (context) =>  SearchTab(),
             WatchListTab.routename: (context) =>  WatchListTab(),
-            MoviesDetails.routeName: (context) =>  MoviesDetails(),
+            MoviesDetails.routeName: (context) => MoviesDetails(),
           },
         );
       },
