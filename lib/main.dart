@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           routes: {
             HomeTab.routename: (context) => HomeTab(),
             SplashScreen.routename: (context) => SplashScreen(),
-            BrowseListTab.routename: (context) => BrowseListTab(),
+            BrowseListTab.routeName: (context) => BrowseListTab(),
             SearchTab.routename: (context) =>  SearchTab(),
             WatchListTab.routename: (context) =>  WatchListTab(),
             MoviesDetails.routeName: (context) => MoviesDetails(),

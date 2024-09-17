@@ -90,13 +90,18 @@ class ApiManager {
       throw Exception("Error fetching data: $e");
     }
   }
-  static Future<MovieCategoriesResponse>getAllCategories() async {
-    try{
-      Uri url= Uri.https(baseUrl,Endpoints.BrowseCategory);
-      var response= await http.get(url);
+  static Future<MovieCategoriesResponse> getCategory() async {
+
+    var headers = {
+      'accept': 'application/json',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlN2MzOGFjMmFkNDZlMTNjZWRkZmJkODY4MWVmMDljNiIsIm5iZiI6MTcyNjU4MzMwMi4zMzU0NDEsInN1YiI6IjY2ZTk5MDEyMWJlY2E4Y2UwN2QyZTliYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yfWSVG40lcpxu1MYOZOUEwY_15NdwS7JvIfDrFsEMhs'
+    };
+    try {
+      Uri url = Uri.https(baseUrl, Endpoints.BrowseCategory);
+      var response = await http.get(url,headers: headers);
       return MovieCategoriesResponse.fromJson(jsonDecode(response.body));
-    }catch(e){
-      throw(e);
+    } catch (e) {
+      throw e;
     }
   }
   static Future<Discover.MovieDiscoverResponse>discoverAllCategories() async {

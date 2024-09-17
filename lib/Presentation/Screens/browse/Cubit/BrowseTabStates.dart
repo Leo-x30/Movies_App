@@ -1,11 +1,17 @@
 import 'package:movies_app/model/CategoriesModel/MovieCategoriesResponse.dart';
 
-abstract class BrowseTabStates {}
+abstract class CategoryStates {}
 
-class BrowseTabInitialState extends BrowseTabStates {}
+class CategoryInichialStates extends CategoryStates {}
 
-class BrowseTabLoadedState extends BrowseTabStates {
-  final List<Genres> categories;
+class CategoryLoudingStates extends CategoryStates {}
 
-  BrowseTabLoadedState({required this.categories});
+class CategoryErorrStates extends CategoryStates {
+  String erorrMessage;
+  CategoryErorrStates({required this.erorrMessage});
+}
+
+class CategorySuccessStates extends CategoryStates {
+    MovieCategoriesResponse response;
+  CategorySuccessStates({required this.response});
 }

@@ -1,8 +1,14 @@
 class MovieCategoriesResponse {
   MovieCategoriesResponse({
+    this.status_code,
+      this.status_message,
+      this.success,
       this.genres,});
 
   MovieCategoriesResponse.fromJson(dynamic json) {
+    success = json['success'];
+    status_code = json['status_code'];
+    status_message = json['status_message'];
     if (json['genres'] != null) {
       genres = [];
       json['genres'].forEach((v) {
@@ -11,6 +17,9 @@ class MovieCategoriesResponse {
     }
   }
   List<Genres>? genres;
+    bool? success;
+  num? status_code;
+  String? status_message;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -26,22 +35,16 @@ class Genres {
   Genres({
       this.id, 
       this.name,
-      this.status_code,
-      this.status_message,
-      this.success});
+      });
 
   Genres.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    success = json['success'];
-    status_code = json['status_code'];
-    status_message = json['status_message'];
+    
   }
   int? id;
   String? name;
-  bool? success;
-  num? status_code;
-  String? status_message;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
