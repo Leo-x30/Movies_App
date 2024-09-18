@@ -1,31 +1,24 @@
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/Presentation/Screens/browse/Cubit/BrowseTabStates.dart';
+import 'package:movies_app/Presentation/Screens/browse/cubit/browsestates.dart';
 import 'package:movies_app/data/api/Api_manger.dart';
-import 'package:movies_app/model/CategoriesModel/MovieCategoriesResponse.dart';
+import 'package:movies_app/data/api/MovieDetailsApi/movie_details_response.dart';
 
+class Browseviewmodel extends Cubit<Browsestates> {
+  Browseviewmodel() : super(BrowseInitialStates());
 
-class BrowseViewModel extends Cubit<CategoryStates> {
-  BrowseViewModel() : super(CategoryInichialStates());
-  List<Genres> categoryList = [];
+  List<Genres> categoryNames = []; // Initialize as an empty list
 
-  void getCategory() async {
+  void getBrowseNames() async {
     try {
-      emit(CategoryLoudingStates());
-      print("loding");
-
-      final categories = await ApiManager.getCategory();
-      if (categories.success == false) {
-        emit(CategoryErorrStates(
-            erorrMessage: categories.status_message ?? "erorr"));
-        print("erorr");
-      } else {
-        categoryList = categories.genres??[];
-        emit(CategorySuccessStates(response: categories));
-        print("success");
-      }
+      emit(BrowseLoadingStates());
+      var response = await ApiManager.getCategoryNames();
+ 
+      // categoryNames = response.genres??[]; 
+      emit(BrowseSuccessStates(response: response));
     } catch (e) {
-      // Handle errors (emitting an error state if needed)
-      print(e);
+      emit(
+          BrowseErrorStates(errorMessage: e.toString())); 
     }
   }
 }

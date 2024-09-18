@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/Presentation/Screens/SearchScreen/SearchScreen.dart';
 import 'package:movies_app/Presentation/Screens/browse/BrowseListTab.dart';
 
+import 'package:movies_app/Presentation/Screens/SearchScreen/SearchTab.dart';
+import 'package:movies_app/Presentation/Screens/homeScreen/cubit/hometabViewmodel.dart';
 import 'package:movies_app/Presentation/Screens/homeScreen/homeTab.dart';
+
 import 'package:movies_app/Presentation/Screens/watchListScreen/WatchListTab.dart';
+import 'package:movies_app/model/hometabmodel/hometabResponse.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routename = 'homeScreen';
@@ -16,18 +19,27 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
+  final Movie mv = Movie(isFavorite: false);
+  late Hometabviewmodel viewmodel = Hometabviewmodel();
 
   List<Widget> screens = [
-    HomeTab(),
-     SearchTab(),
+    HomeTab(
+   
+    ),
+    SearchTab(),
     BrowseListTab(),
-     WatchListTab(),
+    WatchListTab(),
   ];
 
   void onTabTapped(int index) {
     setState(() {
       currentIndex = index;
     });
+  }
+
+  void initState() {
+    super.initState();
+    viewmodel = Hometabviewmodel(); // Initialize viewmodel here
   }
 
   @override
