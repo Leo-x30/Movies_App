@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/Presentation/Screens/browse/cubit/MovieList.dart';
 
 class GridItem extends StatelessWidget {
   final String genreName;
+  final String imageUrl;
 
-  const GridItem({Key? key, required this.genreName}) : super(key: key);
+  GridItem({Key? key, required this.genreName, required this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +19,14 @@ class GridItem extends StatelessWidget {
           children: [
             InkWell(
                 child: Image.network(
-                  'https://siskiyou.sou.edu/wp-content/uploads/2022/03/intro-1644532027.webp',
+                  imageUrl,
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
                 ),
-                onTap: () {}), // Handle tap if needed
+                onTap: () {
+                  Navigator.of(context).pushNamed(MovieList.routename);
+                }),
             Center(
               child: Text(
                 genreName,
