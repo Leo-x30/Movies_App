@@ -3,7 +3,10 @@ class MovieDiscoverResponse {
       this.page, 
       this.results, 
       this.totalPages, 
-      this.totalResults,});
+      this.totalResults,
+      this.status_code,
+      this.status_message,
+      this.success});
 
   MovieDiscoverResponse.fromJson(dynamic json) {
     page = json['page'];
@@ -15,11 +18,17 @@ class MovieDiscoverResponse {
     }
     totalPages = json['total_pages'];
     totalResults = json['total_results'];
+    success = json['success'];
+    status_code = json['status_code'];
+    status_message = json['status_message'];
   }
   int? page;
   List<Results>? results;
   int? totalPages;
   int? totalResults;
+  bool? success;
+  num? status_code;
+  String? status_message;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -50,9 +59,7 @@ class Results {
       this.video, 
       this.voteAverage, 
       this.voteCount,
-      this.status_code,
-      this.status_message,
-      this.success});
+      });
 
   Results.fromJson(dynamic json) {
     adult = json['adult'];
@@ -69,9 +76,7 @@ class Results {
     video = json['video'];
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
-    success = json['success'];
-    status_code = json['status_code'];
-    status_message = json['status_message'];
+
   }
   bool? adult;
   String? backdropPath;
@@ -87,9 +92,7 @@ class Results {
   bool? video;
   double? voteAverage;
   int? voteCount;
-  bool? success;
-  num? status_code;
-  String? status_message;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
