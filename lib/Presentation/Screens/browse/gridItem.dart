@@ -17,23 +17,24 @@ class GridItem extends StatelessWidget {
       child: Center(
         child: Stack(
           children: [
-            InkWell(
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(MovieList.routename);
-                }),
+            Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
             Center(
-              child: Text(
-                genreName,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+              child: InkWell(
+              onTap: (){
+                Navigator.of(context).pushNamed(MovieList.routename);
+              },
+                child: Text(
+                  genreName,
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
