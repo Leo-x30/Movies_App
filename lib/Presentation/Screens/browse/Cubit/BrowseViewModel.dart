@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/Presentation/Screens/browse/cubit/browsestates.dart';
 import 'package:movies_app/data/api/Api_manger.dart';
@@ -7,7 +6,7 @@ import 'package:movies_app/data/api/MovieDetailsApi/movie_details_response.dart'
 class Browseviewmodel extends Cubit<Browsestates> {
   Browseviewmodel() : super(BrowseInitialStates());
 
-  List<Genres> categoryNames = []; // Initialize as an empty list
+  List<Genres> categoryNames = [];
 
   void getBrowseNames() async {
     try {

@@ -55,7 +55,7 @@ class BrowseListTab extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GridItem(
                       genreName: genres[index].name ?? 'Unknown',
-                      imageUrl: genreImages[index % genreImages.length] ?? "https://static3.bigstockphoto.com/8/8/1/large1500/188264848.jpg",
+                      imageUrl: genreImages[index] ?? "https://static3.bigstockphoto.com/8/8/1/large1500/188264848.jpg",
                     );
                   },
                 ),

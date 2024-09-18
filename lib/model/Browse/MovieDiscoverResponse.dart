@@ -6,7 +6,7 @@ class MovieDiscoverResponse {
       this.totalResults,
       this.status_code,
       this.status_message,
-      this.success});
+    this.success});
 
   MovieDiscoverResponse.fromJson(dynamic json) {
     page = json['page'];

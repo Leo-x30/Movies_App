@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/Presentation/Screens/browse/cubit/MovieList.dart';
+import 'package:movies_app/Presentation/Screens/browse/MovieList.dart';
 
 class GridItem extends StatelessWidget {
   final String genreName;

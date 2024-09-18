@@ -4,8 +4,9 @@ import 'package:movies_app/Presentation/Screens/browse/cubit/browsestates.dart';
 import 'package:movies_app/data/api/MovieDetailsApi/movie_details_response.dart';
 import 'package:movies_app/data/api/endpoints.dart';
 import 'package:movies_app/model/Browse/MovieCategoriesResponse.dart';
+import 'package:movies_app/model/Browse/MovieDiscoverResponse.dart';
 
-import 'package:movies_app/model/hometabmodel/NewRealeases.dart';
+import 'package:movies_app/model/hometabmodel/NewRealeases.dart' as realeses ;
 import 'package:movies_app/model/hometabmodel/RecommendedResponse.dart';
 import 'package:movies_app/model/hometabmodel/hometabResponse.dart';
 
@@ -54,7 +55,7 @@ class ApiManager {
     }
   }
 
-  static Future<List<Results>> getNewRealeases() async {
+  static Future<List<realeses.Results>> getNewRealeases() async {
     try {
       Uri url = Uri.https(baseUrl, Endpoints.New_Realeases, {
         'language': 'en-US',
@@ -70,7 +71,7 @@ class ApiManager {
         // return HometabResponse.fromJson(jsonDecode(response.body)['results'] as List  );
         final decodedData = json.decode(response.body)['results'] as List;
         // print(decodedData);
-        return decodedData.map((newr) => Results.fromJson(newr)).toList();
+        return decodedData.map((newr) => realeses.Results.fromJson(newr)).toList();
       } else {
         throw Exception(
             "Failed to load data. Status code: ${response.statusCode}");
@@ -138,6 +139,26 @@ class ApiManager {
       return MovieDetailsResponse.fromJson(jsonDecode(response.body));
     } catch (e) {
       throw e;
+    }
+  }
+  static Future<MovieDiscoverResponse> getMoviesByGenre(int genreId) async {
+    try {
+      Uri url = Uri.https(baseUrl, "/3/discover/movie", {
+        'api_key': apiKey,
+        'with_genres': genreId.toString(),
+        'language': 'en-US',
+        'page': '1',
+      });
+
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        return MovieDiscoverResponse.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      throw Exception("Error fetching movies: $e");
     }
   }
 }
