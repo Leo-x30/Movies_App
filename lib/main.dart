@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
             BrowseListTab.routename: (context) => BrowseListTab(),
             SearchTab.routename: (context) => SearchTab(),
             WatchListTab.routename: (context) => WatchListTab(),
-            MovieList.routename: (context) => MovieList()
+            // Add a dummy route for initial setup
           },
         );
       },

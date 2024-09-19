@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/Presentation/Screens/browse/cubit/browsestates.dart';
-import 'package:movies_app/Presentation/Screens/browse/cubit/browseviewmodel.dart';
+import 'package:movies_app/Presentation/Screens/browse/cubit/Discover%20ViewModel.dart';
+import 'package:movies_app/Presentation/Screens/browse/cubit/DiscoverStates.dart';
 import 'package:movies_app/Presentation/Screens/browse/gridItem.dart';
 
 class BrowseListTab extends StatelessWidget {
@@ -33,8 +33,8 @@ class BrowseListTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => Browseviewmodel()..getBrowseNames(),
-      child: BlocBuilder<Browseviewmodel, Browsestates>(
+      create: (context) => BrowseViewModel()..getBrowseNames(),
+      child: BlocBuilder<BrowseViewModel, BrowseStates>(
         builder: (context, state) {
           if (state is BrowseLoadingStates) {
             return Center(child: CircularProgressIndicator());
@@ -53,10 +53,17 @@ class BrowseListTab extends StatelessWidget {
                   ),
                   itemCount: genres.length,
                   itemBuilder: (context, index) {
-                    return GridItem(
-                      genreName: genres[index].name ?? 'Unknown',
-                      imageUrl: genreImages[index] ?? "https://static3.bigstockphoto.com/8/8/1/large1500/188264848.jpg",
+                    return GestureDetector(
+                      onTap: () {
+                        // No need to navigate here, it's handled in GridItem
+                      },
+                      child: GridItem(
+                        genreName: genres[index].name ?? 'Unknown',
+                        imageUrl: genreImages[index] ?? "https://static3.bigstockphoto.com/8/8/1/large1500/188264848.jpg",
+                        genreId: genres[index].id!, // Pass genreId here
+                      ),
                     );
+
                   },
                 ),
               ),

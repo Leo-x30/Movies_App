@@ -1,15 +1,19 @@
-import 'package:movies_app/model/Browse/MovieDiscoverResponse.dart';
+import '../../../../model/Browse/MovieCategoriesResponse.dart';
 
-abstract class Discoverstates {}
+abstract class BrowseStates {}
 
-class DiscoverLoadingStates extends Discoverstates {}
+class BrowseInitialState extends BrowseStates {}
 
-class DiscoverErrorStates extends Discoverstates {
-  String errorMessage;
-  DiscoverErrorStates({required this.errorMessage});
+class BrowseLoadingStates extends BrowseStates {}
+
+class BrowseSuccessStates extends BrowseStates {
+  final MovieCategoriesResponse response;
+
+  BrowseSuccessStates({required this.response});
 }
 
-class DiscoverSuccessStates extends Discoverstates {
-  MovieDiscoverResponse response;
-  DiscoverSuccessStates({required this.response});
+class BrowseErrorStates extends BrowseStates {
+  final String errorMessage;
+
+  BrowseErrorStates({required this.errorMessage});
 }

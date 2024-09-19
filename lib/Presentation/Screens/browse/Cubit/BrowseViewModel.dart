@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/Presentation/Screens/browse/cubit/browsestates.dart';
+import 'package:movies_app/Presentation/Screens/browse/cubit/DiscoverStates.dart';
 import 'package:movies_app/data/api/Api_manger.dart';
 import 'package:movies_app/data/api/MovieDetailsApi/movie_details_response.dart';
 
-class Browseviewmodel extends Cubit<Browsestates> {
-  Browseviewmodel() : super(BrowseInitialStates());
+class Browseviewmodel extends Cubit<BrowseStates> {
+  Browseviewmodel() : super(BrowseInitialState());
 
   List<Genres> categoryNames = [];
 
@@ -12,8 +12,7 @@ class Browseviewmodel extends Cubit<Browsestates> {
     try {
       emit(BrowseLoadingStates());
       var response = await ApiManager.getCategoryNames();
- 
-      // categoryNames = response.genres??[]; 
+
       emit(BrowseSuccessStates(response: response));
     } catch (e) {
       emit(

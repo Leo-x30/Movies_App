@@ -4,8 +4,14 @@ import 'package:movies_app/Presentation/Screens/browse/MovieList.dart';
 class GridItem extends StatelessWidget {
   final String genreName;
   final String imageUrl;
+  final int genreId; // Add genreId as a parameter
 
-  GridItem({Key? key, required this.genreName, required this.imageUrl}) : super(key: key);
+  GridItem({
+    Key? key,
+    required this.genreName,
+    required this.imageUrl,
+    required this.genreId, // Accept genreId
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +31,18 @@ class GridItem extends StatelessWidget {
             ),
             Center(
               child: InkWell(
-              onTap: (){
-                Navigator.of(context).pushNamed(MovieList.routename);
-              },
+                onTap: () {
+                  // Navigate directly by creating a MaterialPageRoute
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieList(
+                        genreId: genreId,
+                        genreName: genreName,
+                      ),
+                    ),
+                  );
+                },
                 child: Text(
                   genreName,
                   style: TextStyle(

@@ -143,7 +143,7 @@ class ApiManager {
   }
   static Future<MovieDiscoverResponse> getMoviesByGenre(int genreId) async {
     try {
-      Uri url = Uri.https(baseUrl, "/3/discover/movie", {
+      Uri url = Uri.https(baseUrl, Endpoints.Discover_Movies, {
         'api_key': apiKey,
         'with_genres': genreId.toString(),
         'language': 'en-US',
@@ -161,4 +161,5 @@ class ApiManager {
       throw Exception("Error fetching movies: $e");
     }
   }
+
 }

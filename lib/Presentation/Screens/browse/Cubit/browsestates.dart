@@ -1,17 +1,17 @@
-import '../../../../model/Browse/MovieCategoriesResponse.dart';
+import 'package:movies_app/Presentation/Screens/browse/cubit/DiscoverStates.dart';
+import 'package:movies_app/model/Browse/MovieDiscoverResponse.dart';
 
-abstract class Browsestates {}
 
-class BrowseLoadingStates extends Browsestates {}
+class MovieListLoadingState extends BrowseStates {}
 
-class BrowseErrorStates extends Browsestates {
-  String errorMessage;
-  BrowseErrorStates({required this.errorMessage});
+class MovieListSuccessState extends BrowseStates {
+  final MovieDiscoverResponse movieResponse;
+
+  MovieListSuccessState(this.movieResponse);
 }
 
-class BrowseSuccessStates extends Browsestates {
-  MovieCategoriesResponse response;
-  BrowseSuccessStates({required this.response});
-}
+class MovieListErrorState extends BrowseStates {
+  final String errorMessage;
 
-class BrowseInitialStates extends Browsestates {}
+  MovieListErrorState(this.errorMessage);
+}
